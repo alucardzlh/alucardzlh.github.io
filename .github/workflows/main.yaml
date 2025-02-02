@@ -14,9 +14,11 @@ jobs:
       - name: Clean npm Cache
         run: |
           npm cache clean --force
+          # 删除旧依赖和锁定文件
+          rm -rf node_modules pnpm-lock.yaml
       - name: Install and Build 🔧
         run: |
-          npm install
+          npm install --force
           npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
