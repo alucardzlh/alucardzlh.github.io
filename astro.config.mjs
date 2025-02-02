@@ -11,6 +11,15 @@ export default defineConfig({
     host: true
   },
   vite: {
+    build: {
+      rollupOptions: {
+        external: [
+          '@octokit/webhooks',
+          '@octokit/webhooks-methods'
+        ]
+      }
+    },
+
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
