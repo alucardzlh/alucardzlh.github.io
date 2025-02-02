@@ -1,18 +1,18 @@
 export const config = {
   github: {
-    login: "glink25", // github login name, not user name
-    repo: "test-for-anything", //"urodele",
+    login: "alucardzlh", // github login name, not user name
+    repo: "alucardzlh.github.io", //"urodele",
     logInUrl: "",
     logInAuthUrl: "",
   },
   head: {
-    title: "Urodele",
-    brand: "Urodele",
+    title: "Welcome",
+    brand: "Welcome",
     description: "A self-owned full-static blog system",
   },
   footer: {
-    copyright: "© Glink",
-    copyrightUrl: "https://github.com/glink25",
+    copyright: "© Alucardzlh",
+    copyrightUrl: "https://github.com/alucardzlh",
   },
   pagination: {
     size: 10,
