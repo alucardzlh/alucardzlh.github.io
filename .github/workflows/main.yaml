@@ -14,10 +14,6 @@ jobs:
       - name: Clean npm Cache
         run: |
           npm cache clean --force
-      - name: Ensure Correct Dependencies
-        run: |
-          npm install @octokit/webhooks@latest
-          npm install @octokit/webhooks-methods@latest         
       - name: Install and Build 🔧
         run: |
           npm install
