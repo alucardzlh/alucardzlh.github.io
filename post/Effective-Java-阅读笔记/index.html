@@ -1,0 +1,49 @@
+<!DOCTYPE html> <html lang="en"> <head><meta charset="UTF-8"><link rel="apple-touch-icon-precomposed" sizes="144x144" href="/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Welcome"><meta name="msapplication-TileColor" content="#000000"><meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"><meta name="description" content=""><link rel="icon" href="/favicon.ico"><title>Effective Java 阅读笔记 | Welcome</title><link rel="stylesheet" href="/_astro/_page_.CxqF2WSK.css">
+<style>.outlines a[data-anchor-tag=H1]{margin-left:0}.outlines a[data-anchor-tag=H2]{margin-left:12px}.outlines a[data-anchor-tag=H3]{margin-left:24px}.outlines a[data-anchor-tag=H4]{margin-left:36px}.outlines a[data-anchor-tag=H5]{margin-left:48px}.outlines a[data-anchor-tag=H6]{margin-left:60px}
+._tabset_selm3_1 ._tab-panel_selm3_1{display:none}._tabset_selm3_1 ._tab-panels_selm3_4{display:flex}._tabset_selm3_1 input[data-tab-name=direct]{display:none}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=direct]{display:block}._tabset_selm3_1 input[data-tab-name=direct]:checked~._tab-labels_selm3_13 label[data-tab-name=direct]{border-bottom:2px solid red}._tabset_selm3_1 input[data-tab-name=app]{display:none}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-panels_selm3_4 ._tab-panel_selm3_1[data-tab-name=app]{display:block}._tabset_selm3_1 input[data-tab-name=app]:checked~._tab-labels_selm3_13 label[data-tab-name=app]{border-bottom:2px solid red}
+</style>
+<link rel="stylesheet" href="/_astro/_page_.BIc4xYU2.css">
+<link rel="stylesheet" href="/_astro/_id_.Dle6usZr.css"><script type="module" src="/_astro/hoisted.QByCTKo8.js"></script></head> <body class="text-text bg-bg"> <header class="flex justify-between items-center p-2 gap-2 h-10"> <a href="/" class="text-button text-lg" aria-label="homepage"> <div class="i-ri:menu-4-fill"></div> </a> <div class="flex gap-2 items-center header-operations">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2"> <a href="/tag/Effective" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#Effective </a><a href="/tag/java" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
+#java </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Effective-Java-阅读笔记">Effective Java 阅读笔记</h1><p></p><img src="/post-assets/m6q5mwgt-v2-ff22dd232313abf63ed5a0fb09f6a9b8_1440w.png" alt="v2-ff22dd232313abf63ed5a0fb09f6a9b8_1440w.png"><ol><li><p>build模式</p></li><li><p>通过构造器注入类，进行调用,而不是在内部直接创建类使用。</p></li><li><p>重用对象，   通过 static final 缓存昂贵实例  比如正则。</p></li><li><p>自动拆装箱 互转 会耗损更多性能 比如混用int 和integer。</p></li><li><p>轻量对象不要使用对象池</p></li><li><p>通过有效期、缓存大小、软弱引用来解决不能被GC释放的内存  weakHashMap</p></li><li><p>使用try with Resource</p></li><li><p>Camparator  多参数数据排序   自反性 对称性 传递性 一致性  空</p></li><li><p>组合优于继承，接口优于抽象类   bird extends  animal  </p><p>bird总是拥有fly  animal又没有fly   导致基类庞大，子类多未使用方法</p><p>问题：企鹅是鸟但不会飞，蝙蝠不是鸟但又需要飞，</p><p>将fly能力作为一个组件对象 放到animal中 作为成员域  可选 并添加set方法</p></li><li><p> 基于接口-&gt;抽象类-&gt;实现类  完成骨架实现。 公共逻辑或成员域写在抽象类层</p></li><li><p>用抽象类和抽象方法  类层次的方法，解决类中的if-else 标签类</p></li><li><p>基于11再递进，把具体行为抽象为接口，每个动物实例去实现它重写接口内执行方法。然后用animal去注入具体行为接口在类内硬重写方法调用行为接口内的方法。</p></li></ol><script type="module">const injectHtml = (root, html) => {
+  const iframe = document.createElement("iframe");
+  const htmlContent = `<html><head></head><body>${html}</body></html>`;
+  iframe.style.width = "100%";
+  iframe.style.height = "100%";
+  iframe.onload = () => {
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) {
+      return;
+    }
+    doc.open();
+    doc.write(htmlContent);
+    doc.close();
+  };
+  root.replaceChildren(iframe);
+}
+  document.querySelectorAll('.playground')?.forEach(el=>{
+    const html = el.getAttribute('data-html');
+    if (html) {
+      injectHtml(el,html);
+    }
+    const indicator = document.createElement("div");
+    indicator.className = "indicator";
+    const showCode = document.createElement("div");
+    showCode.className = "show-code";
+    showCode.innerText = "code";
+    showCode.onclick = () => {
+      el.parentElement.classList.remove("preview-only");
+    };
+    const showPreview = document.createElement("div");
+    showPreview.className = "show-preview";
+    showPreview.innerText = "preview";
+    showPreview.onclick = () => {
+      el.parentElement.classList.add("preview-only");
+    };
+    indicator.appendChild(showCode);
+    indicator.appendChild(showPreview);
+    el.parentElement.appendChild(indicator);
+    if (window.screen.width < 768) {
+      showPreview.click();
+    }
+  });</script></div> <div data-page-id="Effective-Java-阅读笔记" class="navigator flex justify-between items-center mt-4 py-4"> <a href="/post/关于AI辅助开发" class="flex items-center gap-1 text-blue cursor-pointer flex-[45%]"> <div class="i-ri:arrow-left-double-line w-5 h-5 flex-shrink-0"></div> <div class="text-start">关于AI辅助开发</div> </a> <div></div> </div> </div> <div class="outline-wrapper"></div> </main>  <footer class="mt-8 flex justify-center"> <small class="w-full max-w-[720px] min-h-12 flex justify-center items-center opacity-80"> <a href="https://github.com/alucardzlh" target="_blank">© Alucardzlh</a> </small> </footer> </body></html>
