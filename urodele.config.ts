@@ -6,7 +6,7 @@ export const config = {
     logInAuthUrl: "",
   },
   head: {
-    title: "Alucard’s blog",
+      title: "Alucard’s blog",
     brand: "Welcome",
     description: "A self-owned full-static blog system",
   },
