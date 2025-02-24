@@ -6,8 +6,8 @@ export const config = {
     logInAuthUrl: "",
   },
   head: {
-    title: "Alucard's blog",
-    brand: "Welcome",
+    title: "Welcome",
+    brand: "Alucard's blog",
     description: "A self-owned full-static blog system",
   },
   footer: {
