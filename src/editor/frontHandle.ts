@@ -2,8 +2,7 @@ import { Extension } from "@tiptap/core";
 import { NodeSelection, Plugin, PluginKey, TextSelection } from "@tiptap/pm/state";
 import { Fragment, Slice, Node } from "@tiptap/pm/model";
 
-// @ts-expect-error: import private method
-import { __serializeForClipboard, EditorView } from "@tiptap/pm/view";
+import { EditorView } from "@tiptap/pm/view";
 import { createFrontMenu } from "./frontMenu.tsx";
 
 export interface GlobalFrontHandleOptions {
@@ -126,11 +125,26 @@ export function DragHandlePlugin(options: GlobalFrontHandleOptions & { pluginKey
     }
 
     const slice = view.state.selection.content();
-    const { dom, text } = __serializeForClipboard(view, slice);
+    // const { dom, text } = __serializeForClipboard(view, slice);
+    // 使用官方 API 序列化 DOM
+    const serializer = view.domSerializer;
+    const serialized = serializer.serializeSlice(slice)as { dom: DocumentFragment };
+    // 将 DocumentFragment 转换为 HTML 字符串
+    const tempWrapper = document.createElement('div');
+    tempWrapper.appendChild(serialized.dom.cloneNode(true)); // 克隆避免污染原始 DOM
+    const htmlContent = tempWrapper.innerHTML;
 
+    // 生成纯文本内容
+    const textContent = view.state.doc.textBetween(slice.from, slice.to, "\n");
+
+    // 设置剪切板数据
     event.dataTransfer.clearData();
-    event.dataTransfer.setData("text/html", dom.innerHTML);
-    event.dataTransfer.setData("text/plain", text);
+    event.dataTransfer.setData("text/html", htmlContent);
+    event.dataTransfer.setData("text/plain", textContent);
+
+    // event.dataTransfer.clearData();
+    // event.dataTransfer.setData("text/html", dom.innerHTML);
+    // event.dataTransfer.setData("text/plain", text);
     event.dataTransfer.effectAllowed = "copyMove";
 
     event.dataTransfer.setDragImage(node, 0, 0);
