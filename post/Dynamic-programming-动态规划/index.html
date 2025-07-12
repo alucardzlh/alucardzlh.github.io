@@ -4,7 +4,130 @@
 </style>
 <link rel="stylesheet" href="/_astro/_page_.BIc4xYU2.css">
 <link rel="stylesheet" href="/_astro/_id_.Dle6usZr.css"><script type="module" src="/_astro/hoisted.2YfVzh4B.js"></script></head> <body class="text-text bg-bg"> <header class="flex justify-between items-center p-2 gap-2 h-10"> <a href="/" class="text-button text-lg" aria-label="homepage"> <div class="i-ri:menu-4-fill"></div> </a> <div class="flex gap-2 items-center header-operations">   <div id="auth"></div> </div> </header>  <main> <div class="content"> <div class="w-full flex gap-2 pb-2"> <a href="/tag/%E7%AE%97%E6%B3%95" class="rounded hover:bg-gray-200 dark:hover:bg-modal px-3 py-1 cursor-pointer">
-#算法 </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Dynamic-programming-动态规划">Dynamic programming 动态规划</h1><script type="module">const injectHtml = (root, html) => {
+#算法 </a> </div> <div class="ud-root read-only flex-1"><h1 level="1" id="Dynamic-programming-动态规划">Dynamic programming 动态规划</h1><p></p><h2 level="2" id="基础">基础</h2><ol><li><p>动态规划三大特性 动态转移方程，重叠子问题，最优子结构</p></li><li><p>核心计算框架 =  base case + 穷举状态 + 进行状态转移；</p></li><li><p>递归时间复杂度 = 递归调用的次数 X 递归函数本身的复杂度；</p></li><li><p>递归次数就是递归树上的节点数，高度为N的二叉树，2^n</p></li><li><p>暴力穷举 O1 *O2^n</p><div class="llt-code readonly"><div class="language">java</div><div class="wrapper"><pre><code class="language-java"><span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">fib</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span> n)</span>{
+<span class="hljs-comment" class="hljs-comment">// base case</span>
+<span class="hljs-keyword" class="hljs-keyword">if</span>(n ==<span class="hljs-number" class="hljs-number">0</span>||n== <span class="hljs-number" class="hljs-number">1</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> n;
+<span class="hljs-comment" class="hljs-comment">// 递推关系</span>
+<span class="hljs-keyword" class="hljs-keyword">return</span> fib(n-<span class="hljs-number" class="hljs-number">1</span>)+ fib(n-<span class="hljs-number" class="hljs-number">2</span>);
+}</code></pre></div></div></li><li><p>合理剪枝，备忘录缓存优化，自顶向下， O1 * On  空间复杂度换时间，树形变链型；</p><div class="llt-code readonly"><div class="language">java</div><div class="wrapper"><pre><code class="language-java"><span class="hljs-comment" class="hljs-comment">/* 备忘录递归法 */</span>
+
+    <span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">fib</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span> N)</span>{
+		<span class="hljs-comment" class="hljs-comment">// 备忘录全初始化为 0</span>
+		<span class="hljs-type" class="hljs-type">int</span>[]memo =<span class="hljs-keyword" class="hljs-keyword">new</span> <span class="hljs-title,class_" class="hljs-title,class_">int</span>[N + <span class="hljs-number" class="hljs-number">1</span>];
+		<span class="hljs-comment" class="hljs-comment">// 进行带备忘录的递归</span>
+        <span class="hljs-comment" class="hljs-comment">// 用于存储计算过了的结果，合理剪枝</span>
+		<span class="hljs-keyword" class="hljs-keyword">return</span> helper(memo,N);
+    }
+	<span class="hljs-keyword" class="hljs-keyword">private</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">helper</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span>[]memo,<span class="hljs-type" class="hljs-type">int</span> n)</span>{
+	<span class="hljs-comment" class="hljs-comment">// base case</span>
+	<span class="hljs-keyword" class="hljs-keyword">if</span>(n==<span class="hljs-number" class="hljs-number">0</span>||n==<span class="hljs-number" class="hljs-number">1</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> n;
+	<span class="hljs-comment" class="hljs-comment">//已经计算过，不用再计算了</span>
+	<span class="hljs-keyword" class="hljs-keyword">if</span>(memo[n]!=<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> memo[n];
+	memo[n]= helper(memo,n-<span class="hljs-number" class="hljs-number">1</span>)+helper(memo,n-<span class="hljs-number" class="hljs-number">2</span>);
+	<span class="hljs-keyword" class="hljs-keyword">return</span> memo[n];
+	}</code></pre></div></div></li><li><p>自底向上，优化后空间压缩</p><div class="llt-code readonly"><div class="language">java</div><div class="wrapper"><pre><code class="language-java"><span class="hljs-comment" class="hljs-comment">/*自底向上，表格法*/</span>
+  <span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">fib</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span> N)</span>{
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(N == <span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-number" class="hljs-number">0</span>;
+    <span class="hljs-type" class="hljs-type">int</span>[]dp = <span class="hljs-keyword" class="hljs-keyword">new</span> <span class="hljs-title,class_" class="hljs-title,class_">int</span>[N + <span class="hljs-number" class="hljs-number">1</span>];
+    <span class="hljs-comment" class="hljs-comment">// base case</span>
+    dp[<span class="hljs-number" class="hljs-number">0</span>]=<span class="hljs-number" class="hljs-number">0</span>; dp[<span class="hljs-number" class="hljs-number">1</span>]卡<span class="hljs-number" class="hljs-number">1</span>;
+    <span class="hljs-comment" class="hljs-comment">// 状态转移</span>
+    <span class="hljs-keyword" class="hljs-keyword">for</span>(<span class="hljs-type" class="hljs-type">int</span> i=<span class="hljs-number" class="hljs-number">2</span>;i &lt;= N; i++)
+      dp[i]=dp[i-<span class="hljs-number" class="hljs-number">1</span>]+dp[i -<span class="hljs-number" class="hljs-number">2</span>];
+      <span class="hljs-keyword" class="hljs-keyword">return</span> dp[N];
+    }
+
+<span class="hljs-comment" class="hljs-comment">/*优化后*/</span>
+  <span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">fib</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span> n)</span>{
+    <span class="hljs-comment" class="hljs-comment">// base case</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(n ==<span class="hljs-number" class="hljs-number">0</span>||n == <span class="hljs-number" class="hljs-number">1</span>)
+    <span class="hljs-keyword" class="hljs-keyword">return</span> n;
+    <span class="hljs-comment" class="hljs-comment">// 递推关系</span>
+    <span class="hljs-comment" class="hljs-comment">// 把数组压缩成计算时所需的前两位</span>
+    <span class="hljs-comment" class="hljs-comment">// 压缩节约空间</span>
+    <span class="hljs-type" class="hljs-type">int</span> prev=<span class="hljs-number" class="hljs-number">0</span>，curr=<span class="hljs-number" class="hljs-number">1</span>;
+      <span class="hljs-keyword" class="hljs-keyword">for</span>(inti=<span class="hljs-number" class="hljs-number">2</span>;i&lt;= n; i++){
+        <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-variable" class="hljs-variable">sum</span> <span class="hljs-operator" class="hljs-operator">=</span> prev + curr;
+        prev = curr;
+        curr = sum;
+      }
+    <span class="hljs-keyword" class="hljs-keyword">return</span> curr;
+  }</code></pre></div></div></li><li><p><br></p></li></ol><h2 level="2" id="零钱兑换">零钱兑换</h2><p>给定不同面额的硬币 coins 和一个总金额 amount 。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回-1。</p><p>你可以认为每种硬币的数量是无限的。</p><p>示例： coins = [1,2,5], amount=11</p><p>输出：3</p><p>解释：11 = 5 + 5 + 1 </p><ol><li><p>状态 = 可变参数，选择 = 导致你状态变化的，函数定义</p></li><li><p>状态：目标金额 amount， 选择：coins 数组中李处的所有硬币面额；</p></li><li><p>函数定义：凑出总金额 amount，至少需要 coinChange(coins,amount)枚硬币；</p></li><li><p>base case： amount == 0 时， 需要 0枚 硬币； amount&lt;0 时， 不可能凑出；</p></li><li><p>核心思路：把求11拆解成 求10(11-1)、9(11-2)、6(11-5)，遍历coins；</p></li></ol><div class="llt-code readonly"><div class="language">java</div><div class="wrapper"><pre><code class="language-java"><span class="hljs-comment" class="hljs-comment">/*暴力法*/</span>
+<span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">coinChange</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span>[]coins,<span class="hljs-type" class="hljs-type">int</span> amount)</span>{
+  <span class="hljs-comment" class="hljs-comment">// base case</span>
+  <span class="hljs-keyword" class="hljs-keyword">if</span>(amount ==<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-number" class="hljs-number">0</span>;
+  <span class="hljs-keyword" class="hljs-keyword">if</span>(amount&lt;<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> -<span class="hljs-number" class="hljs-number">1</span>;
+
+  <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-variable" class="hljs-variable">res</span> <span class="hljs-operator" class="hljs-operator">=</span> Integer.MAX VALUE;
+    <span class="hljs-keyword" class="hljs-keyword">for</span>(<span class="hljs-type" class="hljs-type">int</span> coin :coins){
+    <span class="hljs-comment" class="hljs-comment">// 计算子问题的结果</span>
+    <span class="hljs-type" class="hljs-type">int</span> subProblem=coinChange(coins，amount-coin);
+    <span class="hljs-comment" class="hljs-comment">// 子问题无解则跳过</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(subProblem ==-<span class="hljs-number" class="hljs-number">1</span>)<span class="hljs-keyword" class="hljs-keyword">continue</span>;
+
+    <span class="hljs-comment" class="hljs-comment">//如果子问题合法，表示获得一次子解+1等于当前解  </span>
+    <span class="hljs-comment" class="hljs-comment">//在子问题中选择最优解，然后加一</span>
+    res = Math.min(res,subProblem+<span class="hljs-number" class="hljs-number">1</span>);
+    }
+  <span class="hljs-comment" class="hljs-comment">//如果没有获取到赋值，</span>
+  <span class="hljs-keyword" class="hljs-keyword">return</span> res ==Integer.MAX VALUE ?-<span class="hljs-number" class="hljs-number">1</span> :res;
+}
+
+<span class="hljs-comment" class="hljs-comment">/*备忘录优化后*/</span>
+<span class="hljs-type" class="hljs-type">int</span>[] memo;
+<span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">coinChange</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span>[]coins,<span class="hljs-type" class="hljs-type">int</span> amount)</span>{
+    memo = <span class="hljs-keyword" class="hljs-keyword">new</span> <span class="hljs-title,class_" class="hljs-title,class_">int</span>[amount + <span class="hljs-number" class="hljs-number">1</span>];
+    <span class="hljs-comment" class="hljs-comment">//初始化,赋无意义特殊值,标识是否被计算过</span>
+    Arrays.fill(memo,-<span class="hljs-number" class="hljs-number">666</span>);
+    
+    <span class="hljs-keyword" class="hljs-keyword">return</span> dp(coins, amount);
+
+}
+<span class="hljs-keyword" class="hljs-keyword">private</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">dp</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span>[] coins,<span class="hljs-type" class="hljs-type">int</span> amount)</span>{
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(amount ==<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> <span class="hljs-number" class="hljs-number">0</span>;
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(amount&lt;<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">return</span> -<span class="hljs-number" class="hljs-number">1</span>;
+    <span class="hljs-comment" class="hljs-comment">//查询备忘录，防止重复计算</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(memo[amount] !=-<span class="hljs-number" class="hljs-number">666</span>) <span class="hljs-keyword" class="hljs-keyword">return</span> memo[amount];
+    
+    <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-variable" class="hljs-variable">res</span> <span class="hljs-operator" class="hljs-operator">=</span> Integer.MAX VALUE;
+
+    <span class="hljs-keyword" class="hljs-keyword">for</span>(<span class="hljs-type" class="hljs-type">int</span> coin : coins){
+    <span class="hljs-comment" class="hljs-comment">// 计算子问题的结果</span>
+    <span class="hljs-type" class="hljs-type">int</span> subProblem=coinChange(coins，amount-coin);
+    <span class="hljs-comment" class="hljs-comment">// 子问题无解则跳过</span>
+    <span class="hljs-keyword" class="hljs-keyword">if</span>(subProblem ==-<span class="hljs-number" class="hljs-number">1</span>)<span class="hljs-keyword" class="hljs-keyword">continue</span>;
+    <span class="hljs-comment" class="hljs-comment">//如果子问题合法，表示获得一次子解+1等于当前解  </span>
+    <span class="hljs-comment" class="hljs-comment">//在子问题中选择最优解，然后加一</span>
+    res =Math.min(res,subProblem+<span class="hljs-number" class="hljs-number">1</span>);
+    }
+    <span class="hljs-comment" class="hljs-comment">//把计算结果存入备忘录</span>
+    memo[amount]= (res == Integer.MAX_VALUE) ? -<span class="hljs-number" class="hljs-number">1</span> : res;
+    <span class="hljs-keyword" class="hljs-keyword">return</span> memo[amount];
+}
+
+
+<span class="hljs-comment" class="hljs-comment">/*自底向上*/</span>
+<span class="hljs-keyword" class="hljs-keyword">public</span> <span class="hljs-type" class="hljs-type">int</span> <span class="hljs-title,function_" class="hljs-title,function_">coinChange</span><span class="hljs-params" class="hljs-params">(<span class="hljs-type" class="hljs-type">int</span>[lcoins,<span class="hljs-type" class="hljs-type">int</span> amount)</span>{
+    <span class="hljs-comment" class="hljs-comment">//这里+1是为了模拟非法值，amount最优解最多就等于amount/1</span>
+    <span class="hljs-comment" class="hljs-comment">//所以+1就非法了，+10，+100道理一样</span>
+    <span class="hljs-type" class="hljs-type">int</span>[]dp =<span class="hljs-keyword" class="hljs-keyword">new</span> <span class="hljs-title,class_" class="hljs-title,class_">int</span>[amount + <span class="hljs-number" class="hljs-number">1</span>];
+    <span class="hljs-comment" class="hljs-comment">// dp 数组全都初始化为特殊值 amount+1Arrays.fill(dp,amount+1);</span>
+    <span class="hljs-comment" class="hljs-comment">// dp 数组的定义:凑出总金额 amount，至少需要 dp[amount]枚硬币</span>
+    <span class="hljs-comment" class="hljs-comment">// base case</span>
+    dp[<span class="hljs-number" class="hljs-number">0</span>]= <span class="hljs-number" class="hljs-number">0</span>;
+    <span class="hljs-comment" class="hljs-comment">//外层 for 循环在遍历所有状态的所有取值</span>
+    <span class="hljs-keyword" class="hljs-keyword">for</span>(<span class="hljs-type" class="hljs-type">int</span> i=<span class="hljs-number" class="hljs-number">0</span>;i&lt;dp.length; i++){
+        <span class="hljs-comment" class="hljs-comment">//内层 for 循环在求所有选择的最小值</span>
+        <span class="hljs-keyword" class="hljs-keyword">for</span>(<span class="hljs-type" class="hljs-type">int</span> coin:coins){
+          <span class="hljs-comment" class="hljs-comment">// 子问题无解，跳过</span>
+          <span class="hljs-keyword" class="hljs-keyword">if</span>(i-coin &lt;<span class="hljs-number" class="hljs-number">0</span>)<span class="hljs-keyword" class="hljs-keyword">continue</span>;
+          <span class="hljs-comment" class="hljs-comment">// 状态转移</span>
+          dp[i]= Math.min(dp[i],<span class="hljs-number" class="hljs-number">1</span> + dp[i -coin]);
+        }
+    }
+    <span class="hljs-comment" class="hljs-comment">// 看看金额 amount 能不能凑出来</span>
+    <span class="hljs-keyword" class="hljs-keyword">return</span>(dp[amount]== amount+<span class="hljs-number" class="hljs-number">1</span>)?-<span class="hljs-number" class="hljs-number">1</span> :dp[amount];
+}</code></pre></div></div><p></p><p>大部分计算机问题，都是先做暴力穷举，尽可能列出所有解；</p><p>然后在暴力穷举的前提下取优化，去剪枝，达到更聪明的穷举，缩减时间、空间复杂度；</p><p></p><h2 level="2" id="背包问题">背包问题</h2><script type="module">const injectHtml = (root, html) => {
   const iframe = document.createElement("iframe");
   const htmlContent = `<html><head></head><body>${html}</body></html>`;
   iframe.style.width = "100%";
